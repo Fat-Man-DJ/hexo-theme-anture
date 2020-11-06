@@ -1,0 +1,52 @@
+<html>
+  <%- include("_other/head.ejs") %>
+<body>
+
+<div class="row">
+  <%- include("_other/sidebar.ejs") %>
+  <div class="medium-8 columns index">
+    <br>
+    <center>
+      <h1><%- config.title %></h1>
+      <%- include("_other/mobile/mobile-menu.ejs") %>
+      <% page.posts.each(function (post) { %>
+        <article class="post">
+          <div class="post-title">
+            <h3><a class="post-title-link" href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
+          </div>
+          <div class="post-meta">
+            <span class="post-time"><%- date(post.date, "YYYY-MM-DD") %></span>
+          </div>
+          <% if (post.tags && post.tags.length){ %>
+            <%- list_tags(post.tags, {
+              show_count: false,
+              class: 'label secondary tags'
+            }) %>
+          <% } %>
+          <br>
+          <br>
+          <%- post.excerpt %>
+          <h5><a class="post-title-link" href="<%- url_for(post.path) %>">Read More>></a></h5>
+
+        </article>
+
+      <% }) %>
+      <br>
+      <div class="nav">
+      <% if (page.posts.total > 5){ %>
+          <%- paginator({
+            prev_text: "<Prev",
+            next_text: "Next>"
+          }) %>
+      <% } %>
+    </div>
+  </div>
+
+
+
+
+</div>
+<%- include("_other/footer.ejs") %>
+
+</body>
+</html>
